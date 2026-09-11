@@ -1,23 +1,23 @@
+// As I understand from the syllabus, we will be instructed when we will use BNF grammar.
+// This assignment we get to choose any language so it will be written in Java
+// Source from geeksforgeeks
+// https://www.geeksforgeeks.org/java/brainfuck-interpreter-java/
+
 import java.util.Scanner;
 
 class BrainFuck
 {
-    private static Scanner ob = new Scanner(System.in);
+    private static final Scanner ob = new Scanner(System.in);
     private static int ptr; // Data pointer
 
-    // Max memory limit. It is the highest number which
-    // can be represented by an unsigned 16-bit binary
-    // number. Many computer programming environments
-    // beside brainfuck may have predefined
-    // constant values representing 65535.
-    private static int length = 65535;
+    // Max memory limit. Unsigned 8-bit binary
+    // https://thinkmatrix.blog/maximum-number-for-a-byte
+    private static final int length = 255;
 
-    // Array of byte type simulating memory of max
-    // 65535 bits from 0 to 65534.
-    private static byte memory[] = new byte[length];
+    // 256 bits from 0 to 255.
+    private static final byte[] memory = new byte[length];
 
-    // Interpreter function which accepts the code
-    // a string parameter
+    // Interpreter function which accepts the code a string parameter
     private static void interpret(String s)
     {
         int c = 0;
@@ -25,11 +25,6 @@ class BrainFuck
         // Parsing through each character of the code
         for (int i = 0; i < s.length(); i++)
         {
-            // BrainFuck is a tiny language with only
-            // eight instructions. In this loop we check
-            // and execute all those eight instructions
-
-
             // > moves the pointer to the right
             if (s.charAt(i) == '>')
             {
@@ -44,35 +39,29 @@ class BrainFuck
             {
                 if (ptr == 0) // If the pointer reaches zero
 
-                    // pointer is returned to rightmost memory
-                    // position
+                    // pointer is returned to rightmost memory position
                     ptr = length - 1;
                 else
                     ptr --;
             }
 
-            // + increments the value of the memory
-            // cell under the pointer
+            // + increments the value of the memory cell under the pointer
             else if (s.charAt(i) == '+')
                 memory[ptr] ++;
 
-                // - decrements the value of the memory cell
-                // under the pointer
+                // - decrements the value of the memory cell under the pointer
             else if (s.charAt(i) == '-')
                 memory[ptr] --;
 
-                // . outputs the character signified by the
-                // cell at the pointer
+                // . outputs the character signified by the cell at the pointer
             else if (s.charAt(i) == '.')
                 System.out.print((char)(memory[ptr]));
 
-                // , inputs a character and store it in the
-                // cell at the pointer
+                // , inputs a character and store it in the cell at the pointer
             else if (s.charAt(i) == ',')
                 memory[ptr] = (byte)(ob.next().charAt(0));
 
-                // [ jumps past the matching ] if the cell
-                // under the pointer is 0
+                // [ jumps past the matching ] if the cell under the pointer is 0
             else if (s.charAt(i) == '[')
             {
                 if (memory[ptr] == 0)
@@ -89,8 +78,7 @@ class BrainFuck
                 }
             }
 
-            // ] jumps back to the matching [ if the
-            // cell under the pointer is nonzero
+            // ] jumps back to the matching [ if the cell under the pointer is nonzero
             else if (s.charAt(i) == ']')
             {
                 if (memory[ptr] != 0)
